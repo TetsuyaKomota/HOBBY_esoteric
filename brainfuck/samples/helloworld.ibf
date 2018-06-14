@@ -1,0 +1,4 @@
+PRINT Hello World!
+VAR $A 5
++   $A 3
+PRINT $A
