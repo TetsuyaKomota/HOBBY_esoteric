@@ -38,27 +38,26 @@ class Interpreter:
                 self.RB()
             elif c == ".":
                 self.DO()
-            # elif c == "#":
-            #     pass
+            elif c == ",":
+                self.CO()
             else:
                 pass
 
     def LT(self):
-        # print("LT, ", end="")
         self.head = min(self.head+1, config.TAPE_LENGTH)
+
     def GT(self):
-        # print("GT, ", end="")
         self.head = max(self.head-1, 0)
+
     def PL(self):
-        # print("PL, ", end="")
         current = self.tape[self.head]
         self.tape[self.head] = min(current+1, config.TAPE_MAX)
+
     def MI(self):
-        # print("MI, ", end="")
         current = self.tape[self.head]
         self.tape[self.head] = max(current-1, config.TAPE_MIN)
+
     def LB(self):
-        # print("LB, ", end="")
         if self.tape[self.head] > 0:
             tmp = len(self.target)-len(self.code)-1
             self.lbMarker.append(tmp)
@@ -66,18 +65,21 @@ class Interpreter:
             while self.code[0] != "]":
                 self.code = self.code[1:]
             self.code = self.code[1:]
+
     def RB(self):
-        # print("RB, ", end="")
         if self.tape[self.head] == 0:
             pass
         else:
             self.code = self.target[self.lbMarker[-1]:]
             self.lbMarker = self.lbMarker[:-1]
+
     def DO(self):
-        # print("DO, ", end="")
-        # print(chr(ord("A")+self.tape[self.head]), end="")
         print(chr(self.tape[self.head]), end="")
-        # print(self.tape[self.head], end=" ")
+
+    def CO(self):
+        print("please input char:")
+        line = sys.stdin.readline()
+        self.tape[self.head] = ord(line[0])
 
     def showTape(self):
         print()
